@@ -1,6 +1,8 @@
+'use client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Bookmark, Heart, KanbanIcon, MessageSquare, MoreHorizontal, Repeat2, Share2 } from 'lucide-react'
+import { Bookmark, Heart, KanbanIcon, MessageSquare, MoreHorizontal, Pencil, Repeat2, Share2 } from 'lucide-react'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 
 
@@ -51,8 +53,31 @@ const data = [
 
 
 const HomePage = () => {
+  const [scroll, setScroll] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setScroll(true)
+      } else {
+        setScroll(false)
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => { 
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [scroll])
+
   return (
-    <main className='mt-32'>
+    <main className='mt-32 realtive'>
+
+      <Link href={''} className={`fixed py-2 right-5  size-14 bottom-24 z-50 rounded-full bg-blue-500 ${scroll ? 'opacity-50' : "opacity-100"}`}>
+        <div className='w-fit  h-full justify-center m-auto flex items-center'>
+          <Pencil className="size-6 " />
+        </div>
+      </Link>
 
       {data?.map((data, i) => (
         <div key={data.id} className=' px-5 py-5 grid border  grid-cols-7 content-center '>
@@ -102,6 +127,7 @@ const HomePage = () => {
           </div>
         </div>
       ))}
+
 
     </main>
   )
