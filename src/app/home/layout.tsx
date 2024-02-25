@@ -1,3 +1,6 @@
+'use client'
+import React, { useState, useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
 import { ReactNode, SVGProps } from "react";
 import {
     Avatar,
@@ -7,6 +10,7 @@ import {
 import LogoX from "@/components/Logo/LogoX";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Navbar from "@/components/atoms/Navbar";
 
 
 export const EpSetting = (props: SVGProps<SVGSVGElement>) => (
@@ -17,11 +21,51 @@ export const EpSetting = (props: SVGProps<SVGSVGElement>) => (
 
 
 
+
 export const HomeLayout = ({ children }: { children: ReactNode }) => {
+
+    const [scrolling, setScrolling] = useState(false)
+    const controls = useAnimation()
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 30) {
+                if (!scrolling) {
+                    setScrolling(true)
+                    controls.start({ y: -130 })
+                }
+            } else {
+                if (scrolling) {
+                    setScrolling(false)
+                    controls.start({ y: 0 })
+                }
+            }
+        }
+        window.addEventListener('scroll', handleScroll)
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        }
+    }, [scrolling, controls])
+
+
     return (
         <>
-            <header className="px-5 pt-3 border ">
-                    <div className="flex pb-7 justify-between items-center">
+            <motion.div
+                initial={{ y: 0 }}
+                animate={controls}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                style={{
+                    width: '100%',
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    zIndex: 100,
+                    height: 'auto',
+                }}
+            >
+                <header className="px-5 pt-5 border ">
+                    <div className="flex pb-4 justify-between items-center">
                         <Avatar>
                             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-9" />
                             <AvatarFallback>CN</AvatarFallback>
@@ -38,9 +82,11 @@ export const HomeLayout = ({ children }: { children: ReactNode }) => {
                         <Link href={''} className={`text-sm font-bold cursor-pointer border-b-4 py-3 border-blue-500 `}>For you</Link>
                         <Link href={'/login'} className={`text-sm font-normal cursor-pointer py-3 text-gray-400 border-b-4 border-blue-500`}>Following</Link>
                     </div>
-            </header>
+                </header>
+            </motion.div>
 
             {children}
+            <Navbar />
         </>
     )
 }
