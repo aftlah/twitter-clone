@@ -42,7 +42,7 @@ const Navbar = () => {
             initial={{ y: 0 }}
             animate={controls}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
-           
+            className='sm:hidden'
             style={{
                 width: '100%',
                 position: 'fixed',

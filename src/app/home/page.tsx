@@ -71,7 +71,7 @@ const HomePage = () => {
   }, [scroll])
 
   return (
-    <main className='mt-32 realtive'>
+    <main className='mt-32 realtive sm:mt-0 '>
 
       <Link href={''} className={`fixed py-2 right-5  size-14 bottom-24 z-50 rounded-full bg-blue-500 ${scroll ? 'opacity-50' : "opacity-100"}`}>
         <div className='w-fit  h-full justify-center m-auto flex items-center'>
@@ -80,12 +80,12 @@ const HomePage = () => {
       </Link>
 
       {data?.map((data, i) => (
-        <div key={data.id} className=' px-5 py-5 grid border  grid-cols-7 content-center '>
+        <div key={data.id} className=' px-5 py-5 grid border grid-cols-7  sm:grid-cols-12 content-center '>
           <Avatar className=''>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-10" />
+            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-10 p-" />
             <AvatarFallback>Profile</AvatarFallback>
           </Avatar>
-          <div className='col-span-6 '>
+          <div className='col-span-6 sm:col-span-11 '>
             <div className='flex justify-between'>
               <p className='font-bold '>
                 {data.username}
