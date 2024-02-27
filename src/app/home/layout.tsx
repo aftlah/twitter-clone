@@ -11,6 +11,7 @@ import LogoX from "@/components/Logo/LogoX";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Navbar from "@/components/atoms/Navbar";
+import { Bell, Bookmark, CircleEllipsis, Home, Mail, NotepadText, Search, User, UserRound, UsersRound } from 'lucide-react';
 
 
 export const EpSetting = (props: SVGProps<SVGSVGElement>) => (
@@ -19,6 +20,54 @@ export const EpSetting = (props: SVGProps<SVGSVGElement>) => (
     </svg>
 )
 
+const link = [
+    {
+        id: 1,
+        logo: <Home className="size-8" />,
+        href: ''
+    },
+    {
+        id: 2,
+        logo: <Search className="size-8" />,
+        href: ''
+    },
+    {
+        id: 3,
+        logo: <Bell className="size-8" />,
+        href: ''
+    },
+    {
+        id: 4,
+        logo: <Mail className="size-8" />,
+        href: ''
+    },
+    {
+        id: 5,
+        logo: <NotepadText className="size-8" />,
+        href: ''
+    },
+    {
+        id: 6,
+        logo: <Bookmark className="size-8" />,
+        href: ''
+    },
+    {
+        id: 7,
+        logo: <UsersRound className="size-8" />,
+        href: ''
+    },
+    {
+        id: 8,
+        logo: <UserRound className="size-8" />,
+        href: ''
+    },
+    {
+        id: 9,
+        logo: <CircleEllipsis className="size-8" />,
+        href: ''
+    }
+
+]
 
 
 
@@ -50,7 +99,7 @@ export const HomeLayout = ({ children }: { children: ReactNode }) => {
 
 
     return (
-        <>
+        <div className='sm:grid grid-cols-12 lg:hidden w-full content-center overflow-x-hidden '>
             <motion.div
                 initial={{ y: 0 }}
                 animate={controls}
@@ -63,6 +112,7 @@ export const HomeLayout = ({ children }: { children: ReactNode }) => {
                     zIndex: 100,
                     height: 'auto',
                 }}
+                className='sm:hidden'
             >
                 <header className="px-5 pt-5 border ">
                     <div className="flex pb-4 justify-between items-center">
@@ -85,9 +135,49 @@ export const HomeLayout = ({ children }: { children: ReactNode }) => {
                 </header>
             </motion.div>
 
-            {children}
-            <Navbar />
-        </>
+            <div className=' h-screen 0 sm:col-span-1 sm:fixed hidden sm:flex sm:flex-col items-end justify-between  sm:w-[15%] py-5 px-5 '>
+                <div>
+                    <div className='size-8'>
+                        <LogoX />
+                    </div>
+                    <div className='flex flex-col gap-y-5 py-6'>
+                        {link.map((link, _) => (
+                            <Link href={link.href} className='mx-auto  size-10 cursor-pointer ' key={link.id}>
+                                {link.logo}
+                                {/* <CircleEllipsis className="size-10" /> */}
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+                <div>
+                    <Avatar>
+                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-9" />
+                        <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                </div>
+            </div>
+
+            <div className=' col-span-10 col-start-3 '>
+                <header className='hidden sm:flex w-full  justify-between   '>
+                    <Link href={''} className={`text-sm  w-[100%]  text-center font-bold cursor-pointer   bg-green-700 `}>
+                        <p className='border-blue-500 border-b-4 py-4 w-28 mx-auto'>For you</p>
+                    </Link>
+                    <Link href={'/login'} className={`text-sm font-normal text-center  w-[100%]   cursor-pointer  text-gray-400 bg-red-700 `}>
+                        <p className='border-blue-500  border-b-4 w-28 py-4 mx-auto'>Following</p>
+                    </Link>
+                    <Link href={''} className='h-auto w-[20%] flex justify-center items-center'>
+                        <EpSetting className="size-6" />
+                    </Link>
+                </header>
+                <div className='hidden sm:block'>
+
+                </div>
+                {children}
+            </div>
+
+
+            {/* <Navbar /> */}
+        </div>
     )
 }
 
