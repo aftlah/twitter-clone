@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 const data = [
   {
     id: 1,
-    username: 'shadcn',
+    username: 'pulu pulu',
     avatar: '',
     contents: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem repudiandae corrupti magnam quos, perspiciatis at quia, ducimus accusantium possimus corporis aliquid quis minus. Mollitia laboriosam eos, culpa sed porro pariatur!',
   },
@@ -65,40 +65,41 @@ const HomePage = () => {
     }
 
     window.addEventListener('scroll', handleScroll)
-    return () => { 
+    return () => {
       window.removeEventListener('scroll', handleScroll)
     }
   }, [scroll])
 
   return (
     <main className='mt-32 realtive sm:mt-0 '>
-
-      <Link href={''} className={`fixed py-2 right-5  size-14 bottom-24 z-50 rounded-full bg-blue-500 ${scroll ? 'opacity-50' : "opacity-100"}`}>
+      <Link href={''} className={`fixed py-2 right-5  size-14 bottom-24 z-50 rounded-full hover:opacity-90 bg-blue-500 ${scroll ? 'opacity-50' : "opacity-100"}`}>
         <div className='w-fit  h-full justify-center m-auto flex items-center'>
           <Pencil className="size-6 " />
         </div>
       </Link>
 
       {data?.map((data, i) => (
-        <div key={data.id} className=' px-5 py-5 grid border grid-cols-7  sm:grid-cols-12 content-center '>
-          <Avatar className=''>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-10 p-" />
-            <AvatarFallback>Profile</AvatarFallback>
+        <div key={data.id} className=' px-5 py-5 grid border grid-cols-8 sm:grid-cols-12 content-center sm:gap-x-5 md:gap-x-0 '>
+          <Avatar className='col-span-1'>
+            <Link href={''}>
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-10 p-" />
+              <AvatarFallback>Profile</AvatarFallback>
+            </Link>
           </Avatar>
-          <div className='col-span-6 sm:col-span-11 '>
-            <div className='flex justify-between'>
-              <p className='font-bold '>
+          <div className='col-span-7 sm:col-span-10 '>
+            <div className='flex justify-between mb-1'>
+              <Link href={''} className='font-bold hover:underline'>
                 {data.username}
-              </p>
-              <span>
+              </Link>
+              <Link href={''}>
                 <MoreHorizontal />
-              </span>
+              </Link>
             </div>
-            <div>
-              <p className=''>
+            <Link href={''}>
+              <p className='text-xs md:text-sm'>
                 {data.contents}
               </p>
-            </div>
+            </Link>
 
             <div className='flex text-sm gap-x-3 text-gray-500 pt-4 items-center'>
               <Link href={''} className='flex gap-1 items-center px-1'>
