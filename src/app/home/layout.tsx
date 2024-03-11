@@ -1,77 +1,92 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
-import { ReactNode, SVGProps } from "react";
+import { ReactNode } from "react";
 import {
     Avatar,
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
+import {
+    Form,
+    FormControl,
+    // FormDescription,
+    FormField,
+    FormItem,
+    // FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
 import LogoX from "@/components/Logo/LogoX";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Navbar from "@/components/atoms/Navbar";
-import { Bell, Bookmark, CircleEllipsis, Home, Mail, NotepadText, Search, User, UserRound, UsersRound } from 'lucide-react';
+import { Bell, Bookmark, CircleEllipsis, Home, Mail, NotepadText, Search, Settings, User, UserRound, UsersRound } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { toast } from '@/components/ui/use-toast';
 
-
-export const EpSetting = (props: SVGProps<SVGSVGElement>) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 1024 1024" {...props}>
-        <path fill="currentColor" d="M600.704 64a32 32 0 0 1 30.464 22.208l35.2 109.376c14.784 7.232 28.928 15.36 42.432 24.512l112.384-24.192a32 32 0 0 1 34.432 15.36L944.32 364.8a32 32 0 0 1-4.032 37.504l-77.12 85.12a357.12 357.12 0 0 1 0 49.024l77.12 85.248a32 32 0 0 1 4.032 37.504l-88.704 153.6a32 32 0 0 1-34.432 15.296L708.8 803.904c-13.44 9.088-27.648 17.28-42.368 24.512l-35.264 109.376A32 32 0 0 1 600.704 960H423.296a32 32 0 0 1-30.464-22.208L357.696 828.48a351.616 351.616 0 0 1-42.56-24.64l-112.32 24.256a32 32 0 0 1-34.432-15.36L79.68 659.2a32 32 0 0 1 4.032-37.504l77.12-85.248a357.12 357.12 0 0 1 0-48.896l-77.12-85.248A32 32 0 0 1 79.68 364.8l88.704-153.6a32 32 0 0 1 34.432-15.296l112.32 24.256c13.568-9.152 27.776-17.408 42.56-24.64l35.2-109.312A32 32 0 0 1 423.232 64H600.64zm-23.424 64H446.72l-36.352 113.088l-24.512 11.968a294.113 294.113 0 0 0-34.816 20.096l-22.656 15.36l-116.224-25.088l-65.28 113.152l79.68 88.192l-1.92 27.136a293.12 293.12 0 0 0 0 40.192l1.92 27.136l-79.808 88.192l65.344 113.152l116.224-25.024l22.656 15.296a294.113 294.113 0 0 0 34.816 20.096l24.512 11.968L446.72 896h130.688l36.48-113.152l24.448-11.904a288.282 288.282 0 0 0 34.752-20.096l22.592-15.296l116.288 25.024l65.28-113.152l-79.744-88.192l1.92-27.136a293.12 293.12 0 0 0 0-40.256l-1.92-27.136l79.808-88.128l-65.344-113.152l-116.288 24.96l-22.592-15.232a287.616 287.616 0 0 0-34.752-20.096l-24.448-11.904L577.344 128zM512 320a192 192 0 1 1 0 384a192 192 0 0 1 0-384zm0 64a128 128 0 1 0 0 256a128 128 0 0 0 0-256z"></path>
-    </svg>
-)
 
 const link = [
     {
         id: 1,
-        logo: <Home className="size-8" />,
-        href: ''
+        logo: <Home className="size-7" />,
+        href: '',
+        title: 'Home'
     },
     {
         id: 2,
-        logo: <Search className="size-8" />,
-        href: ''
+        logo: <Search className="size-7" />,
+        href: '',
+        title: 'Search'
     },
     {
         id: 3,
-        logo: <Bell className="size-8" />,
-        href: ''
+        logo: <Bell className="size-7" />,
+        href: '',
+        title: 'Notification'
     },
     {
         id: 4,
-        logo: <Mail className="size-8" />,
-        href: ''
+        logo: <Mail className="size-7" />,
+        href: '',
+        title: 'Message'
     },
     {
         id: 5,
-        logo: <NotepadText className="size-8" />,
-        href: ''
+        logo: <NotepadText className="size-7" />,
+        href: '',
+        title: 'Note'
     },
     {
         id: 6,
-        logo: <Bookmark className="size-8" />,
-        href: ''
+        logo: <Bookmark className="size-7" />,
+        href: '',
+        title: 'Bookmark'
     },
     {
         id: 7,
-        logo: <UsersRound className="size-8" />,
-        href: ''
+        logo: <UsersRound className="size-7" />,
+        href: '',
+        title: 'Group'
     },
     {
         id: 8,
-        logo: <UserRound className="size-8" />,
-        href: ''
+        logo: <UserRound className="size-7" />,
+        href: '',
+        title: 'Profile'
     },
     {
         id: 9,
-        logo: <CircleEllipsis className="size-8" />,
-        href: ''
+        logo: <CircleEllipsis className="size-7" />,
+        href: '',
+        title: 'More'
     }
-
 ]
 
 
-
-export const HomeLayout = ({ children }: { children: ReactNode }) => {
+export default function HomeLayout({ children }: { children: ReactNode }) {
 
     const [scrolling, setScrolling] = useState(false)
     const controls = useAnimation()
@@ -97,9 +112,35 @@ export const HomeLayout = ({ children }: { children: ReactNode }) => {
         }
     }, [scrolling, controls])
 
+    const FormSchema = z.object({
+        username: z.string().min(2, {
+            message: "Username must be at least 2 characters.",
+        }),
+    })
+
+
+    const form = useForm<z.infer<typeof FormSchema>>({
+        resolver: zodResolver(FormSchema),
+        defaultValues: {
+            username: "",
+        },
+    })
+
+    function onSubmit(data: z.infer<typeof FormSchema>) {
+        toast({
+            title: "You submitted the following values:",
+            description: (
+                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+                </pre>
+            ),
+        })
+    }
+
+
 
     return (
-        <div className='sm:grid grid-cols-12 lg:hidden w-full content-center overflow-x-hidden '>
+        <div className='sm:grid grid-cols-12 lg:hidden   w-full content-center overflow-x-hidden  '>
             <motion.div
                 initial={{ y: 0 }}
                 animate={controls}
@@ -117,15 +158,17 @@ export const HomeLayout = ({ children }: { children: ReactNode }) => {
                 <header className="px-5 pt-5 border ">
                     <div className="flex pb-4 justify-between items-center">
                         <Avatar>
-                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-9" />
-                            <AvatarFallback>CN</AvatarFallback>
+                            <Link href={''}>
+                                <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-10" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Link>
                         </Avatar>
                         <div className="size-5">
                             <LogoX />
                         </div>
-                        <Button variant={'ghost'}>
-                            <EpSetting className="size-5" />
-                        </Button>
+                        <Link href={''} className=' hover:bg-zinc-800 p-1.5 rounded-full'>
+                            <Settings />
+                        </Link>
                     </div>
 
                     <div className="flex items-center justify-around">
@@ -135,50 +178,77 @@ export const HomeLayout = ({ children }: { children: ReactNode }) => {
                 </header>
             </motion.div>
 
-            <div className=' h-screen 0 sm:col-span-1 sm:fixed hidden sm:flex sm:flex-col items-end justify-between  sm:w-[15%] py-5 px-5 '>
+            <div className=' h-screen 0 sm:col-span-1 sm:fixed hidden sm:flex sm:flex-col items-end justify-between  sm:w-[15%] py-4 px-3 '>
                 <div>
-                    <div className='size-8'>
+                    <div className='size-7'>
                         <LogoX />
                     </div>
-                    <div className='flex flex-col gap-y-5 py-6'>
-                        {link.map((link, _) => (
-                            <Link href={link.href} className='mx-auto  size-10 cursor-pointer ' key={link.id}>
-                                {link.logo}
-                                {/* <CircleEllipsis className="size-10" /> */}
+                    <div className='flex flex-col gap-y-3 py-6'>
+                        {link.map((link, i) => (
+                            <Link href={link.href} className=' mx-auto size-10 cursor-pointer w-auto gap-x-1 items-center flex flex-row lg:mx-0' key={link.id}>
+                                <p>{link.logo}</p>
+                                <p className='hidden lg:block'>{link.title}</p>
                             </Link>
                         ))}
                     </div>
                 </div>
-                <div>
+                <Link href={''}>
                     <Avatar>
                         <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-9" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
-                </div>
+                </Link>
             </div>
 
-            <div className=' col-span-10 col-start-3 '>
-                <header className='hidden sm:flex w-full  justify-between   '>
-                    <Link href={''} className={`text-sm  w-[100%]  text-center font-bold cursor-pointer   bg-green-700 `}>
+            <div className=' col-span-10 col-start-3 max-w-2xl '>
+                <header className='hidden sm:flex w-full  justify-between  border-l-2 pr-5 '>
+                    <Link href={''} className={`text-sm  w-[100%]  text-center font-bold cursor-pointer   `}>
                         <p className='border-blue-500 border-b-4 py-4 w-28 mx-auto'>For you</p>
                     </Link>
-                    <Link href={'/login'} className={`text-sm font-normal text-center  w-[100%]   cursor-pointer  text-gray-400 bg-red-700 `}>
+                    <Link href={'/login'} className={`text-sm font-normal text-center  w-[100%]   cursor-pointer  text-gray-400  `}>
                         <p className='border-blue-500  border-b-4 w-28 py-4 mx-auto'>Following</p>
                     </Link>
-                    <Link href={''} className='h-auto w-[20%] flex justify-center items-center'>
-                        <EpSetting className="size-6" />
+                    <Link href={''} className=' flex  items-center   h-auto'>
+                        <div className='hover:bg-zinc-800 p-1.5 rounded-full'>
+                            <Settings />
+                        </div>
                     </Link>
                 </header>
-                <div className='hidden sm:block'>
-
+                <div className='hidden sm:block p-5 border '>
+                    <div className='flex items-start gap-x-2'>
+                        <Avatar>
+                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-10" />
+                            <AvatarFallback>CN</AvatarFallback>
+                        </Avatar>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="w-[87%] space-y-6">
+                                <FormField
+                                    control={form.control}
+                                    name="username"
+                                    render={({ field }) => (
+                                        <FormItem >
+                                            {/* <FormLabel>Username</FormLabel> */}
+                                            <FormControl className='bg-red-800'>
+                                                <Input type='text' className='text-xl h-auto font-light border-0 bg-transparent' placeholder="What is happening?!" {...field} />
+                                            </FormControl>
+                                            {/* <FormDescription>
+                                                This is your public display name.
+                                            </FormDescription> */}
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                                <Button type="submit" className="ml-auto rounded-3xl px-6 bg-blue-500 text-white font-semibold hover:bg-blue-500">Post</Button>
+                            </form>
+                        </Form>
+                    </div>
                 </div>
                 {children}
             </div>
-
-
-            {/* <Navbar /> */}
+            <Navbar />
         </div>
     )
 }
 
-export default HomeLayout;
+
+
