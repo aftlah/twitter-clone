@@ -20,7 +20,7 @@ import LogoX from "@/components/Logo/LogoX";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Navbar from "@/components/atoms/Navbar";
-import { Bell, Bookmark, CircleEllipsis, Home, Mail, NotepadText, Search, Settings, User, UserRound, UsersRound } from 'lucide-react';
+import { Bell, Bookmark, CircleEllipsis, Home, Mail, NotepadText, Search, Settings, User, UserRound, UsersRound, MoreHorizontal } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -85,6 +85,35 @@ const link = [
     }
 ]
 
+const data = [
+    {
+        id: 1,
+        country: 'Indonesia',
+        title: 'Haid',
+        posts: 7000
+    },
+    {
+        id: 2,
+        country: 'Indonesia',
+        title: 'Haid',
+        posts: 7000
+    },
+    {
+        id: 3,
+        country: 'Malaysia',
+        title: 'Ikan apa tu man',
+        posts: 6500
+    },
+    {
+        id: 4,
+        country: 'Singapore',
+        title: 'Bird fly',
+        posts: 8090
+    },
+
+
+]
+
 
 export default function HomeLayout({ children }: { children: ReactNode }) {
 
@@ -140,7 +169,7 @@ export default function HomeLayout({ children }: { children: ReactNode }) {
 
 
     return (
-        <div className='sm:grid grid-cols-12 lg:hidden   w-full content-center overflow-x-hidden  '>
+        <div className='sm:grid grid-cols-12 lg:grid-cols-6 w-full content-center overflow-x-hidden'>
             <motion.div
                 initial={{ y: 0 }}
                 animate={controls}
@@ -173,12 +202,12 @@ export default function HomeLayout({ children }: { children: ReactNode }) {
 
                     <div className="flex items-center justify-around">
                         <Link href={''} className={`text-sm font-bold cursor-pointer border-b-4 py-3 border-blue-500 `}>For you</Link>
-                        <Link href={'/login'} className={`text-sm font-normal cursor-pointer py-3 text-gray-400 border-b-4 border-blue-500`}>Following</Link>
+                        <Link href={''} className={`text-sm font-normal cursor-pointer py-3 text-gray-400 border-b-4 border-blue-500`}>Following</Link>
                     </div>
                 </header>
             </motion.div>
 
-            <div className=' h-screen 0 sm:col-span-1 sm:fixed hidden sm:flex sm:flex-col items-end justify-between  sm:w-[15%] py-4 px-3 '>
+            <div className=' h-screen sm:fixed hidden sm:flex sm:flex-col items-end justify-between  sm:w-[15%] py-4 px-3 '>
                 <div>
                     <div className='size-7'>
                         <LogoX />
@@ -194,18 +223,18 @@ export default function HomeLayout({ children }: { children: ReactNode }) {
                 </div>
                 <Link href={''}>
                     <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-9" />
+                        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-10" />
                         <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                 </Link>
             </div>
 
-            <div className=' col-span-10 col-start-3 max-w-2xl '>
-                <header className='hidden sm:flex w-full  justify-between  border-l-2 pr-5 '>
+            <div className=' col-span-10 col-start-3 lg:col-span-3 lg:col-start-2 max-w-2xl  '>
+                <header className='hidden sm:flex w-full justify-between  border pr-5 '>
                     <Link href={''} className={`text-sm  w-[100%]  text-center font-bold cursor-pointer   `}>
                         <p className='border-blue-500 border-b-4 py-4 w-28 mx-auto'>For you</p>
                     </Link>
-                    <Link href={'/login'} className={`text-sm font-normal text-center  w-[100%]   cursor-pointer  text-gray-400  `}>
+                    <Link href={'/following'} className={`text-sm font-normal text-center  w-[100%]   cursor-pointer  text-gray-400  `}>
                         <p className='border-blue-500  border-b-4 w-28 py-4 mx-auto'>Following</p>
                     </Link>
                     <Link href={''} className=' flex  items-center   h-auto'>
@@ -244,6 +273,33 @@ export default function HomeLayout({ children }: { children: ReactNode }) {
                     </div>
                 </div>
                 {children}
+            </div>
+
+            <div className='hidden lg:block col-span-2   h-full mx-auto'>
+                <div className='max-w-xs space-y-3'>
+                    <div className='bg-gray-800 p-4 rounded-2xl flex flex-col gap-y-2'>
+                        <h1 className='font-bold text-lg'>Subscribe to Premium</h1>
+                        <p className='text-sm'>Subscribe to unlock new features and if eligible, receive a share of ads revenue.</p>
+                        <Button className='bg-blue-500 text-white rounded-3xl w-fit px-5 py-1 hover:bg-blue-400'>Subscribe</Button>
+                    </div>
+
+                    <div className='bg-gray-800 p-4 rounded-2xl flex flex-col gap-y-5'>
+                        <h1 className='font-bold text-lg'>Trends for you</h1>
+                        {data.map((data, _) => (
+                            <Link href={''} key={data.id} className='flex justify-between '>
+                                <div>
+                                    <p className='text-xs text-gray-400 font-light'>Trending In {data.country}</p>
+                                    <h3 className=''>{data.title}</h3>
+                                    <p className='text-xs text-gray-400 font-light'>{data.posts} posts</p>
+                                </div>
+                                <Link href={''} className=' h-fit rounded-full p-1 hover:bg-blue-500'>
+                                    <MoreHorizontal className="size-5" />
+                                </Link>
+                            </Link>
+                        ))}
+
+                    </div>
+                </div>
             </div>
             <Navbar />
         </div>

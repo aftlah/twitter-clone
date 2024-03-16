@@ -8,7 +8,7 @@ import { motion, useAnimation } from 'framer-motion';
 const Navbar = () => {
 
     const [scrolling, setScrolling] = useState(false)
-    const [scroll,setScroll] = useState(false) 
+    const [scroll, setScroll] = useState(false)
 
     const controls = useAnimation()
 

@@ -82,7 +82,7 @@ const HomePage = () => {
         <div key={data.id} className=' px-5 py-5 grid border grid-cols-8 sm:grid-cols-12 content-center sm:gap-x-5 md:gap-x-0 '>
           <Avatar className='col-span-1'>
             <Link href={''}>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-10 p-" />
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="size-10" />
               <AvatarFallback>Profile</AvatarFallback>
             </Link>
           </Avatar>
@@ -128,8 +128,6 @@ const HomePage = () => {
           </div>
         </div>
       ))}
-
-
     </main>
   )
 }
