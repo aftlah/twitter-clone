@@ -26,6 +26,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from '@/components/ui/use-toast';
+import { SizeIcon } from '@radix-ui/react-icons';
 
 
 const link = [
@@ -234,7 +235,7 @@ export default function HomeLayout({ children }: { children: ReactNode }) {
                     <Link href={''} className={`text-sm  w-[100%]  text-center font-bold cursor-pointer   `}>
                         <p className='border-blue-500 border-b-4 py-4 w-28 mx-auto'>For you</p>
                     </Link>
-                    <Link href={'/following'} className={`text-sm font-normal text-center  w-[100%]   cursor-pointer  text-gray-400  `}>
+                    <Link href={'/following'} className={`text-sm font-normal text-center  w-[100%] cursor-pointer  text-gray-400  `}>
                         <p className='border-blue-500  border-b-4 w-28 py-4 mx-auto'>Following</p>
                     </Link>
                     <Link href={''} className=' flex  items-center   h-auto'>
@@ -275,15 +276,21 @@ export default function HomeLayout({ children }: { children: ReactNode }) {
                 {children}
             </div>
 
-            <div className='hidden lg:block col-span-2   h-full mx-auto'>
+            <div className='hidden lg:block col-span-2  h-full mx-auto'>
+                <div className='border flex flex-row items-center rounded-full my-3 px-2'>
+                    <div className='px-2'>
+                        <Search className="size-4" />
+                    </div>
+                    <Input placeholder='Search' className='focus:outline-none  w-[87%] ' />
+                </div>
                 <div className='max-w-xs space-y-3'>
-                    <div className='bg-gray-800 p-4 rounded-2xl flex flex-col gap-y-2'>
+                    <div className='bg-transparent p-4 rounded-2xl flex flex-col gap-y-2 border'>
                         <h1 className='font-bold text-lg'>Subscribe to Premium</h1>
                         <p className='text-sm'>Subscribe to unlock new features and if eligible, receive a share of ads revenue.</p>
                         <Button className='bg-blue-500 text-white rounded-3xl w-fit px-5 py-1 hover:bg-blue-400'>Subscribe</Button>
                     </div>
 
-                    <div className='bg-gray-800 p-4 rounded-2xl flex flex-col gap-y-5'>
+                    <div className='bg-transparent p-4 rounded-2xl flex flex-col gap-y-5 border'>
                         <h1 className='font-bold text-lg'>Trends for you</h1>
                         {data.map((data, _) => (
                             <Link href={''} key={data.id} className='flex justify-between '>
@@ -297,6 +304,9 @@ export default function HomeLayout({ children }: { children: ReactNode }) {
                                 </Link>
                             </Link>
                         ))}
+                        <Link href={''} className='text-blue-500 text-sm'>
+                            Show more
+                        </Link>
 
                     </div>
                 </div>
